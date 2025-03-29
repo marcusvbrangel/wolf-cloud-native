@@ -1,5 +1,10 @@
 
 
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 echo "# wolf-cloud-native" >> README.md
 git init
 git add README.md
@@ -46,67 +51,41 @@ git push -u origin main
 4. criar o dockerfile
 
 
+
 5. criar a imagem
+
 
   docker image build -t wolfstore:1.0 .
 
 
-      [+] Building 32.2s (17/17) FINISHED          docker:default
-       => [internal] load build definition from Dockerfile   0.0s
-       => => transferring dockerfile: 343B                   0.0s
-       => [internal] load metadata for docker.io/library/ng  2.0s
-       => [internal] load metadata for docker.io/library/no  2.0s
-       => [auth] library/node:pull token for registry-1.doc  0.0s
-       => [auth] library/nginx:pull token for registry-1.do  0.0s
-       => [internal] load .dockerignore                      0.0s
-       => => transferring context: 151B                      0.0s
-       => [build 1/7] FROM docker.io/library/node:hydrogen-  7.2s
-       => => resolve docker.io/library/node:hydrogen-alpine  0.0s
-       => => sha256:a25c800a782c8fd378561a2 7.69kB / 7.69kB  0.0s
-       => => sha256:5348a188a579ce04d3b046e 1.72kB / 1.72kB  0.0s
-       => => sha256:25400e30e462dcf28305d53 6.18kB / 6.18kB  0.0s
-       => => sha256:0a9a5dfd008f05ebc27e479 3.63MB / 3.63MB  0.6s
-       => => sha256:1d4df60de0ae4dd2998a2 40.10MB / 40.10MB  5.6s
-       => => sha256:e35374db49a048db667da89 1.39MB / 1.39MB  1.2s
-       => => extracting sha256:0a9a5dfd008f05ebc27e4790db07  0.1s
-       => => sha256:5144ae5a961c347d7f5d389a801 443B / 443B  1.2s
-       => => extracting sha256:1d4df60de0ae4dd2998a2f90a10f  1.3s
-       => => extracting sha256:e35374db49a048db667da89eea1d  0.0s
-       => => extracting sha256:5144ae5a961c347d7f5d389a8018  0.0s
-       => [internal] load build context                      0.1s
-       => => transferring context: 7.50MB                    0.1s
-       => [stage-1 1/2] FROM docker.io/library/nginx:1.25.2  6.6s
-       => => resolve docker.io/library/nginx:1.25.2-alpine@  0.0s
-       => => sha256:7272a6e0f728e95c8641d21 1.65kB / 1.65kB  0.0s
-       => => sha256:fc2d39a0d6565db4bd6c94a 1.99kB / 1.99kB  0.0s
-       => => sha256:661daf9bcac824a4be78d 16.69kB / 16.69kB  0.0s
-       => => sha256:96526aa774ef0126ad0fe9e 3.40MB / 3.40MB  2.1s
-       => => sha256:4a0f59666a5fd450f2ce8d0 1.90MB / 1.90MB  2.3s
-       => => extracting sha256:96526aa774ef0126ad0fe9e9a957  0.1s
-       => => sha256:9f5472f13101a5c107862581ec3 628B / 628B  2.7s
-       => => extracting sha256:4a0f59666a5fd450f2ce8d09ed4e  0.2s
-       => => sha256:a4c1563b8f0493c722ef582966b 958B / 958B  2.5s
-       => => sha256:7662ce3fbb6ddde8fceaff888cc 370B / 370B  2.7s
-       => => extracting sha256:9f5472f13101a5c107862581ec30  0.0s
-       => => extracting sha256:a4c1563b8f0493c722ef582966b7  0.0s
-       => => extracting sha256:7662ce3fbb6ddde8fceaff888cc5  0.0s
-       => => sha256:f1a3f1328c13555b0fa6833 1.40kB / 1.40kB  2.9s
-       => => sha256:d94270e5bff8364a9c3de98 1.21kB / 1.21kB  2.9s
-       => => extracting sha256:d94270e5bff8364a9c3de98e4a7c  0.0s
-       => => extracting sha256:f1a3f1328c13555b0fa6833ca510  0.0s
-       => => sha256:a2860423d97a2f0920011 12.64MB / 12.64MB  5.9s
-       => => extracting sha256:a2860423d97a2f092001145d53a1  0.4s
-       => [build 2/7] WORKDIR /app                           0.6s
-       => [build 3/7] COPY package*.json .                   0.1s
-       => [build 4/7] RUN npm install                       16.2s
-       => [build 5/7] RUN npx ngcc --properties es2023 brow  0.9s
-       => [build 6/7] COPY . .                               0.1s
-       => [build 7/7] RUN npm run build                      4.7s
-       => [stage-1 2/2] COPY --from=build /app/dist/wolfsto  0.1s
-       => exporting to image                                 0.0s
-       => => exporting layers                                0.0s
-       => => writing image sha256:a3d227df927eb1024d23a82f6  0.0s
-       => => naming to docker.io/library/wolfstore:1.0       0.0s
+      [+] Building 6.9s (19/19) FINISHED                                          docker:default
+       => [internal] load build definition from Dockerfile                                  0.0s
+       => => transferring dockerfile: 487B                                                  0.0s
+       => [internal] load metadata for docker.io/library/nginx:1.25.2-alpine                1.2s
+       => [internal] load metadata for docker.io/library/node:hydrogen-alpine3.20           1.2s
+       => [auth] library/nginx:pull token for registry-1.docker.io                          0.0s
+       => [auth] library/node:pull token for registry-1.docker.io                           0.0s
+       => [internal] load .dockerignore                                                     0.0s
+       => => transferring context: 151B                                                     0.0s
+       => [build 1/8] FROM docker.io/library/node:hydrogen-alpine3.20@sha256:a25c800a782c8  0.0s
+       => [internal] load build context                                                     0.0s
+       => => transferring context: 14.33kB                                                  0.0s
+       => [stage-1 1/3] FROM docker.io/library/nginx:1.25.2-alpine@sha256:7272a6e0f728e95c  0.0s
+       => CACHED [build 2/8] WORKDIR /app                                                   0.0s
+       => CACHED [build 3/8] COPY package*.json .                                           0.0s
+       => CACHED [build 4/8] RUN npm install                                                0.0s
+       => CACHED [build 5/8] RUN #npx ngcc --properties es2023 browser module main --first  0.0s
+       => [build 6/8] RUN npx ngcc --properties es2023 browser module main --first-only --  0.8s
+       => [build 7/8] COPY . .                                                              0.1s
+       => [build 8/8] RUN npm run build --prod                                              4.7s
+       => CACHED [stage-1 2/3] COPY --from=build /app/dist/wolfstore/ /usr/share/nginx/htm  0.0s
+       => CACHED [stage-1 3/3] COPY ./nginx/default.conf /etc/nginx/conf.d                  0.0s
+       => exporting to image                                                                0.0s
+       => => exporting layers                                                               0.0s
+       => => writing image sha256:e7113a328e2ec8e63cb5bf6f6c3585d1ee76c87d1db57a027194bb79  0.0s
+       => => naming to docker.io/library/wolfstore:1.0
+
+
 
 
   docker image ls
@@ -115,11 +94,29 @@ git push -u origin main
       wolfstore    1.0              a3d227df927e   About a minute ago   42.9MB
 
 
+
+
   docker container rum -p 8085:80 wolfstore:1.0
 
+      /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+      /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+      /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+      10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+      /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+      /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+      /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+      /docker-entrypoint.sh: Configuration complete; ready for start up
+      2025/03/29 04:59:01 [notice] 1#1: using the "epoll" event method
+      2025/03/29 04:59:01 [notice] 1#1: nginx/1.25.2
+      2025/03/29 04:59:01 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10)
+      2025/03/29 04:59:01 [notice] 1#1: OS: Linux 6.11.0-19-generic
+      2025/03/29 04:59:01 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+      2025/03/29 04:59:01 [notice] 1#1: start worker processes
+      2025/03/29 04:59:01 [notice] 1#1: start worker process 22
+      2025/03/29 04:59:01 [notice] 1#1: start worker process 23
+      2025/03/29 04:59:01 [notice] 1#1: start worker process 24
+      2025/03/29 04:59:01 [notice] 1#1: start worker process 25
 
-
-docker run --name wolfstore -p 8085:80 wolfstore:1.0
 
 
 
@@ -163,11 +160,407 @@ vim /etc/nginx/conf.d/default.conf
 
 
 
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+7. enviar imagem para o docker hub
+
+
+https://hub.docker.com/
+
+marcusvbrangel/wolfstore
+
+
+
+docker tag wolfstore:1.0 marcusvbrangel/wolfstore:1.0
+
+
+
+docker push marcusvbrangel/wolfstore:1.0
+
+
+      The push refers to repository [docker.io/marcusvbrangel/wolfstore]
+      43d130950a60: Pushed
+      2a5453859db0: Pushed
+      ae609780e57c: Mounted from library/nginx
+      6f4a8e682735: Mounted from library/nginx
+      f1e97ae5229e: Mounted from library/nginx
+      f98384134eae: Mounted from library/nginx
+      ea06dfa6cd92: Mounted from library/nginx
+      feb2ab09a002: Mounted from library/nginx
+      8fb91325d019: Mounted from library/nginx
+      cc2447e1835a: Mounted from library/nginx
+      1.0: digest: sha256:1900297cb3693a8bb57f6bd20c6dd2d14ba6567f9679113d2144f2c1a64c7cd5 size: 2406
 
 
 
 
 
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+8. Configurar artefatos do Kubernetes
+
+
+mkdir k8s
+
+  frontend-deployment.yaml
+
+  frontend-service.yaml
+
+  frontend-configmap.yaml
+
+  frontend-secrets.yaml
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+docker --version
+
+    Docker version 28.0.4, build b8034c0
+
+
+kubectl version
+
+    Client Version: v1.32.3
+    Kustomize Version: v5.5.0
+
+
+minikube version
+
+    minikube version: v1.33.1
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+minikube start --cpus=4 --memory=8192
+
+
+- Criar um Cluster com um Perfil Personalizado
+  Neste exemplo, "wolf-cluster" é o nome do perfil e do cluster.
+
+    minikube start -p wolf-cluster
+
+
+- Listar Perfis no Minikube
+
+    minikube profile list
+
+
+- Configuração de Contextos no Kubernetes
+
+    kubectl config set-context my-custom-context --cluster=my-custom-cluster --user=my-user
+
+
+
+- Alternar para um Contexto
+
+      kubectl config use-context my-custom-context
+
+
+
+- Listar todos os Contextos
+
+      kubectl config get-contexts
+
+
+
+Nota: Perfis do Minikube: Use perfis para criar e gerenciar múltiplos clusters Minikube com nomes personalizados.
+      Contextos do Kubernetes: Configure contextos para alternar facilmente entre diferentes clusters ou perfis no Kubernetes.
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+Para instalar a versão mais nova do Minikube, siga os passos abaixo:
+
+Baixe o binário mais recente do Minikube:
+
+    curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+
+Torne o binário executável:
+
+    chmod +x minikube-linux-amd64
+
+
+Mova o binário para um diretório incluído no seu PATH:
+
+    sudo mv minikube-linux-amd64 /usr/local/bin/minikube
+
+
+Verifique a versão instalada para confirmar a atualização:
+
+    minikube version
+
+          minikube version: v1.35.0
+
+
+minikube status
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+O erro indica que o contêiner do Minikube não está em execução ou não foi encontrado. Para resolver isso, você pode tentar reiniciar o Minikube. Siga os passos abaixo:
+
+
+Pare o Minikube, caso esteja em execução:
+
+
+minikube stop
+Exclua qualquer instância existente do Minikube:
+
+
+minikube delete
+Inicie o Minikube novamente:
+
+
+minikube start
+Verifique o status do Minikube:
+
+
+minikube status
+Esses comandos devem ajudar a resolver o problema e reiniciar o Minikube corretamente.
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+minikube start
+
+
+      😄  minikube v1.35.0 on Ubuntu 24.04
+      ✨  Automatically selected the docker driver. Other choices: none, ssh
+      📌  Using Docker driver with root privileges
+      👍  Starting "minikube" primary control-plane node in "minikube" cluster
+      🚜  Pulling base image v0.0.46 ...
+      💾  Downloading Kubernetes v1.32.0 preload ...
+          > preloaded-images-k8s-v18-v1...:  333.57 MiB / 333.57 MiB  100.00% 5.41 Mi
+          > gcr.io/k8s-minikube/kicbase...:  500.31 MiB / 500.31 MiB  100.00% 6.57 Mi
+      🔥  Creating docker container (CPUs=2, Memory=3900MB) ...
+      🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+          ▪ Generating certificates and keys ...
+          ▪ Booting up control plane ...
+          ▪ Configuring RBAC rules ...
+      🔗  Configuring bridge CNI (Container Networking Interface) ...
+      🔎  Verifying Kubernetes components...
+          ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+      🌟  Enabled addons: storage-provisioner, default-storageclass
+      🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+
+
+
+minikube status
+
+
+      minikube
+      type: Control Plane
+      host: Running
+      kubelet: Running
+      apiserver: Running
+      kubeconfig: Configured
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Passos para Aplicar o Deployment
+
+
+    kubectl apply -f k8s/frontend-deployment.yaml
+
+
+    kubectl get deployments -o wide
+
+        NAME                  READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES                         SELECTOR
+        frontend-deployment   3/3     3            3           86s   frontend     marcusvbrangel/wolfstore:1.0   app=frontend
+
+
+
+
+    kubectl get pods -o wide
+
+        NAME                                  READY   STATUS    RESTARTS   AGE     IP           NODE       NOMINATED NODE   READINESS GATES
+        frontend-deployment-b84cc7d45-65nls   1/1     Running   0          2m33s   10.244.0.3   minikube   <none>           <none>
+        frontend-deployment-b84cc7d45-fccm9   1/1     Running   0          2m33s   10.244.0.5   minikube   <none>           <none>
+        frontend-deployment-b84cc7d45-tzqq6   1/1     Running   0          2m33s   10.244.0.4   minikube   <none>           <none>
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+Configurações do Serviço
+
+
+
+kubectl apply -f k8s/frontend-service.yaml
+
+
+
+
+kubectl get services -o wide
+
+    NAME               TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+    frontend-service   LoadBalancer   10.96.254.101   <pending>     8090:32699/TCP   39s   app=frontend
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+Usar o Minikube Tunnel
+
+O Minikube fornece uma ferramenta chamada minikube tunnel que pode ser usada para expor serviços do tipo LoadBalancer.
+
+
+    minikube tunnel
+
+
+        [sudo] senha para wolf:
+        Status:
+                machine: minikube
+                pid: 320451
+                route: 10.96.0.0/12 -> 192.168.49.2
+                minikube: Running
+                services: [frontend-service]
+            errors:
+                        minikube: no errors
+                        router: no errors
+                        loadbalancer emulator: no errors
+
+
+
+
+kubectl get services -o wide
+
+
+      NAME               TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          AGE     SELECTOR
+      frontend-service   LoadBalancer   10.96.254.101   10.96.254.101   8090:32699/TCP   7m54s   app=frontend
+
+
+
+
+
+http://10.96.254.101:8090/
+
+
+
+
+
+
+curl -i 10.96.254.101:8090
+
+
+      HTTP/1.1 200 OK
+      Server: nginx/1.25.2
+      Date: Sat, 29 Mar 2025 06:42:55 GMT
+      Content-Type: text/html
+      Content-Length: 482
+      Last-Modified: Sat, 29 Mar 2025 02:13:49 GMT
+      Connection: keep-alive
+      ETag: "67e7575d-1e2"
+      Accept-Ranges: bytes
+
+      <!doctype html>
+      <html lang="en" data-beasties-container>
+      <head>
+        <meta charset="utf-8">
+        <title>Wolfstore</title>
+        <base href="/">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+      <link rel="stylesheet" href="styles-5INURTSO.css"></head>
+      <body>
+        <app-root></app-root>
+      <script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-KZ3DSSKO.js" type="module"></script></body>
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
 
 
 
