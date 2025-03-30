@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: backend-config
+  name: wolfstore-backend-config
   namespace: wolfns
 data:
   backend_url: "http://backend-service:8080"

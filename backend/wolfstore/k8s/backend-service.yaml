@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: wolfstore-backend-service
   namespace: wolfns
 spec:
   selector:
-    app: backend
+    app: wolfstore-backend
   ports:
     - protocol: TCP
-      port: 8090
+      port: 8096
       targetPort: 80
-  type: LoadBalancer
+  type: ClusterIP

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-deployment
+  name: wolfstore-backend-deployment
   namespace: wolfns
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: backend
+      app: wolfstore-backend
   template:
     metadata:
       labels:
-        app: backend
+        app: wolfstore-backend
     spec:
       containers:
-        - name: backend
+        - name: wolfstore-backend
           image: marcusvbrangel/wolfstore-backend:1.0
           ports:
             - containerPort: 80
