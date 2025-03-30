@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
+  name: wolfstore-frontend-service
   namespace: wolfns
 spec:
   selector:
-    app: frontend
+    app: wolfstore-frontend
   ports:
     - protocol: TCP
       port: 8090

@@ -4,17 +4,24 @@
 #EXPOSE 9090
 #ENTRYPOINT ["java", "-jar", "wolfstore.jar"]
 
-
-FROM openjdk:21
-
-# Definir o diretório de trabalho
+#
+FROM alpine/java:21-jdk
 WORKDIR /app
+COPY /home/wolf/Documentos/desenvolvimento/estudos/wolf-cloud-native/backend/wolfstore/target/wolfstore-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 80
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
-# Copiar o arquivo JAR do serviço Spring para o contêiner
-COPY target/wolfstore.jar .
 
-# Expor a porta do serviço
-EXPOSE 8080
-
-# Comando para executar o serviço Spring
-ENTRYPOINT ["java", "-jar", "wolfstore.jar"]
+# Etapa 1: Construção
+#FROM maven:3.8.6-openjdk-21 AS build
+#WORKDIR /app
+#COPY pom.xml .
+#COPY src ./src
+#RUN mvn clean package -DskipTests
+#
+## Etapa 2: Execução
+#FROM eclipse-temurin:21-jre
+#WORKDIR /app
+#COPY --from=build /app/target/wolfstore.jar app.jar
+#EXPOSE 80
+#ENTRYPOINT ["java", "-jar", "app.jar"]

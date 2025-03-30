@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment
+  name: wolfstore-frontend-deployment
   namespace: wolfns
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: frontend
+      app: wolfstore-frontend
   template:
     metadata:
       labels:
-        app: frontend
+        app: wolfstore-frontend
     spec:
       containers:
-        - name: frontend
-          image: marcusvbrangel/wolfstore:1.0
+        - name: wolfstore-frontend
+          image: marcusvbrangel/wolfstore-frontend:1.0
           ports:
             - containerPort: 80
