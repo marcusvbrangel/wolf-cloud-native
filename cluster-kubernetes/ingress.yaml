@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # Use "issuer" se você estiver usando Issuer
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - wolfstore.com
+    secretName: example-tls
+  rules:
+  - host: wolfstore
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wolfstore
+            port:
+              number: 80

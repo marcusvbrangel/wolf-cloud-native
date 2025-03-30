@@ -96,7 +96,7 @@ git push -u origin main
 
 
 
-  docker container rum -p 8085:80 wolfstore:1.0
+  docker container run -p 8085:80 wolfstore:1.0
 
       /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
       /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
@@ -537,6 +537,648 @@ curl -i 10.96.254.101:8090
 
 
 
+
+
+minikube start -p wolf-cluster --nodes=3
+
+
+      😄  [wolf-cluster] minikube v1.35.0 on Ubuntu 24.04
+      ✨  Automatically selected the docker driver
+      📌  Using Docker driver with root privileges
+
+      👍  Starting "wolf-cluster" primary control-plane node in "wolf-cluster" cluster
+      🚜  Pulling base image v0.0.46 ...
+      🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+      🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+          ▪ Generating certificates and keys ...
+          ▪ Booting up control plane ...
+          ▪ Configuring RBAC rules ...
+      🔗  Configuring CNI (Container Networking Interface) ...
+      🔎  Verifying Kubernetes components...
+          ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+      🌟  Enabled addons: storage-provisioner, default-storageclass
+
+      👍  Starting "wolf-cluster-m02" worker node in "wolf-cluster" cluster
+      🚜  Pulling base image v0.0.46 ...
+      🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+      🌐  Found network options:
+          ▪ NO_PROXY=192.168.49.2
+      🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+          ▪ env NO_PROXY=192.168.49.2
+      🔎  Verifying Kubernetes components...
+
+      👍  Starting "wolf-cluster-m03" worker node in "wolf-cluster" cluster
+      🚜  Pulling base image v0.0.46 ...
+      🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+      🌐  Found network options:
+          ▪ NO_PROXY=192.168.49.2,192.168.49.3
+      🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+          ▪ env NO_PROXY=192.168.49.2
+          ▪ env NO_PROXY=192.168.49.2,192.168.49.3
+      🔎  Verifying Kubernetes components...
+      🏄  Done! kubectl is now configured to use "wolf-cluster" cluster and "default" namespace by default
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+1. Verificar o Status do Cluster
+sh
+minikube status -p wolf-cluster
+2. Listar Todos os Nós no Cluster
+sh
+kubectl get nodes --context=wolf-cluster
+3. Obter Informações Detalhadas de um Nó
+sh
+kubectl describe node <node-name>
+4. Verificar os Pods em Todos os Namespaces
+sh
+kubectl get pods --all-namespaces
+5. Listar Todos os Serviços em Todos os Namespaces
+sh
+kubectl get services --all-namespaces
+6. Obter Informações Sobre o Contexto Atual
+sh
+kubectl config current-context
+7. Obter Informações Sobre o Cluster
+sh
+kubectl cluster-info
+8. Obter Informações Detalhadas de um Pod
+sh
+kubectl describe pod <pod-name> -n <namespace>
+9. Verificar o Uso de Recursos de um Nó
+sh
+kubectl top node
+10. Verificar o Uso de Recursos de um Pod
+sh
+kubectl top pod -n <namespace>
+Exemplos
+Verificar o Status do Cluster:
+
+sh
+minikube status -p wolf-cluster
+Listar Todos os Nós no Cluster:
+
+sh
+kubectl get nodes --context=minikube
+Obter Informações Detalhadas de um Nó:
+
+sh
+kubectl describe node minikube
+Verificar os Pods em Todos os Namespaces:
+
+sh
+kubectl get pods --all-namespaces
+Listar Todos os Serviços em Todos os Namespaces:
+
+sh
+kubectl get services --all-namespaces
+Obter Informações Sobre o Contexto Atual:
+
+sh
+kubectl config current-context
+Obter Informações Sobre o Cluster:
+
+sh
+kubectl cluster-info
+Obter Informações Detalhadas de um Pod:
+
+sh
+kubectl describe pod my-pod -n default
+Verificar o Uso de Recursos de um Nó:
+
+sh
+kubectl top node
+Verificar o Uso de Recursos de um Pod:
+
+sh
+kubectl top pod -n default
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+kubectl apply -f k8s/namespace.yaml
+
+
+kubectl apply -f k8s/
+
+      configmap/frontend-config created
+      deployment.apps/frontend-deployment created
+      secret/frontend-secrets created
+      service/frontend-service created
+      namespace/wolfns unchanged
+
+
+
+kubectl config set-context --current --namespace=wolfns
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+minikube tunnel -p wolf-cluster
+
+
+        [sudo] senha para wolf:
+        Status:
+          machine: wolf-cluster
+          pid: 988097
+          route: 10.96.0.0/12 -> 192.168.49.2
+          minikube: Running
+          services: [frontend-service, frontend-service]
+            errors:
+            minikube: no errors
+            router: no errors
+            loadbalancer emulator: no errors
+
+
+
+
+kubectl get svc
+
+
+        NAME               TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)          AGE
+        frontend-service   LoadBalancer   10.111.62.235   10.111.62.235   8090:30124/TCP   7m53s
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+Instalar o Helm
+
+
+# Instalar o Helm
+
+
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+
+          % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                         Dload  Upload   Total   Spent    Left  Speed
+        100 11913  100 11913    0     0  36471      0 --:--:-- --:--:-- --:--:-- 36542
+        Downloading https://get.helm.sh/helm-v3.17.2-linux-amd64.tar.gz
+        Verifying checksum... Done.
+        Preparing to install helm into /usr/local/bin
+        [sudo] senha para wolf:
+        helm installed into /usr/local/bin/helm
+
+
+
+helm version
+
+        version.BuildInfo{Version:"v3.17.2", GitCommit:"cc0bbbd6d6276b83880042c1ecb34087e84d41eb", GitTreeState:"clean", GoVersion:"go1.23.7"}
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+Instalar o cert-manager
+
+
+Vamos instalar o cert-manager para gerenciar certificados TLS com Let's Encrypt.
+
+
+# Adicionar o repositório Helm do cert-manager
+
+helm repo add jetstack https://charts.jetstack.io
+
+helm repo update
+
+      Hang tight while we grab the latest from your chart repositories...
+      ...Successfully got an update from the "jetstack" chart repository
+      ...Successfully got an update from the "kubernetes-dashboard" chart repository
+      ...Successfully got an update from the "prometheus-community" chart repository
+      ...Successfully got an update from the "bitnami" chart repository
+
+
+
+# Criar o namespace para o cert-manager
+
+kubectl create namespace cert-manager
+
+
+
+# Instalar o cert-manager usando o Helm
+
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v1.5.3
+
+
+
+# Verificar a instalação do cert-manager
+
+kubectl get pods --namespace cert-manager
+
+
+      NAME                                       READY   STATUS    RESTARTS      AGE
+      cert-manager-78764f8796-bjfmm              1/1     Running   0             4m25s
+      cert-manager-cainjector-7dd7ccf897-srqwh   1/1     Running   0             4m25s
+      cert-manager-startupapicheck-szszg         1/1     Running   3 (49s ago)   4m24s
+      cert-manager-webhook-68fddb647b-4zj5t      1/1     Running   0             4m25s
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+Configurar o Issuer ou ClusterIssuer
+
+
+Crie um arquivo letsencrypt-issuer.yaml para configurar o Issuer ou ClusterIssuer:
+
+
+../wolf-cloud-native/cluster-kubernetes/letsencrypt-issuer.yaml
+
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: your-email@example.com
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+
+
+
+kubectl apply -f letsencrypt-issuer.yaml
+
+
+    kubectl apply -f letsencrypt-issuer.yaml
+    error: resource mapping not found for name: "letsencrypt-prod" namespace: "" from "letsencrypt-issuer.yaml": no matches for kind "ClusterIssuer" in version "cert-manager.io/v1"
+    ensure CRDs are installed first
+
+
+
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.crds.yaml
+
+
+      customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io created
+      customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io created
+      customresourcedefinition.apiextensions.k8s.io/challenges.acme.cert-manager.io created
+      customresourcedefinition.apiextensions.k8s.io/clusterissuers.cert-manager.io created
+      customresourcedefinition.apiextensions.k8s.io/issuers.cert-manager.io created
+      customresourcedefinition.apiextensions.k8s.io/orders.acme.cert-manager.io created
+
+
+
+
+kubectl get crds | grep cert-manager
+
+
+      certificaterequests.cert-manager.io   2025-03-30T04:46:18Z
+      certificates.cert-manager.io          2025-03-30T04:46:18Z
+      challenges.acme.cert-manager.io       2025-03-30T04:46:18Z
+      clusterissuers.cert-manager.io        2025-03-30T04:46:18Z
+      issuers.cert-manager.io               2025-03-30T04:46:18Z
+      orders.acme.cert-manager.io           2025-03-30T04:46:19Z
+
+
+
+
+kubectl apply -f letsencrypt-issuer.yaml
+
+
+      clusterissuer.cert-manager.io/letsencrypt-prod created
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+5. Instalar o NGINX Kubernetes Gateway
+
+
+# Adicionar o repositório Helm do NGINX
+
+helm repo add nginx-stable https://helm.nginx.com/stable
+
+      "nginx-stable" has been added to your repositories
+
+
+
+helm repo update
+
+      Hang tight while we grab the latest from your chart repositories...
+      ...Successfully got an update from the "nginx-stable" chart repository
+      ...Successfully got an update from the "kubernetes-dashboard" chart repository
+      ...Successfully got an update from the "jetstack" chart repository
+      ...Successfully got an update from the "prometheus-community" chart repository
+      ...Successfully got an update from the "bitnami" chart repository
+      Update Complete. ⎈Happy Helming!⎈
+
+
+
+# Instalar o NGINX Kubernetes Gateway
+
+helm install nginx-gateway nginx-stable/nginx-kubernetes-gateway
+
+      helm repo update
+      Hang tight while we grab the latest from your chart repositories...
+      ...Successfully got an update from the "kubernetes-dashboard" chart repository
+      ...Successfully got an update from the "nginx-stable" chart repository
+      ...Successfully got an update from the "jetstack" chart repository
+      ...Successfully got an update from the "prometheus-community" chart repository
+      ...Successfully got an update from the "bitnami" chart repository
+      Update Complete. ⎈Happy Helming!⎈
+      wolf@dell-Inspiron:$ helm install nginx-gateway nginx-stable/nginx-kubernetes-gateway
+      Error: INSTALLATION FAILED: chart "nginx-kubernetes-gateway" matching  not found in nginx-stable index. (try 'helm repo update'): no chart name found
+
+      O erro indica que o gráfico nginx-kubernetes-gateway não foi encontrado no repositório nginx-stable. Isso pode ocorrer se o nome do gráfico estiver incorreto ou se ele não estiver disponível no repositório.
+
+
+
+
+
+
+helm search repo nginx-stable
+
+      NAME                                        	CHART VERSION	APP VERSION	DESCRIPTION
+      nginx-stable/nginx-appprotect-dos-arbitrator	0.1.0        	1.1.0      	NGINX App Protect Dos arbitrator
+      nginx-stable/nginx-devportal                	1.7.2        	1.7.2      	A Helm chart for deploying ACM Developer Portal
+      nginx-stable/nginx-ingress                  	2.0.1        	4.0.1      	NGINX Ingress Controller
+      nginx-stable/nginx-service-mesh             	2.0.0        	           	NGINX Service Mesh
+      nginx-stable/nms                            	1.16.0       	NIM 2.19.0 	A chart for installing the NGINX Management Suite
+      nginx-stable/nms-acm                        	1.9.3        	1.9.3      	A Helm chart for Kubernetes
+      nginx-stable/nms-adm                        	4.0.0        	4.0.0      	A Helm chart for ADM
+      nginx-stable/nms-hybrid                     	2.19.1       	2.19.1     	A Helm chart for Kubernetes
+
+
+
+helm install nginx-gateway nginx-stable/nginx-ingress
+
+
+      NAME: nginx-gateway
+      LAST DEPLOYED: Sun Mar 30 01:55:56 2025
+      NAMESPACE: wolfns
+      STATUS: deployed
+      REVISION: 1
+      TEST SUITE: None
+      NOTES:
+      NGINX Ingress Controller 4.0.1 has been installed.
+
+      For release notes for this version please see: https://docs.nginx.com/nginx-ingress-controller/releases/
+
+      Installation and upgrade instructions: https://docs.nginx.com/nginx-ingress-controller/installation/installing-nic/installation-with-helm/
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+6. Configurar o Ingress para Usar o Certificado
+
+
+Crie um arquivo ingress.yaml para configurar o Ingress para usar o certificado Let's Encrypt:
+
+
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # Use "issuer" se você estiver usando Issuer
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - wolfstore.com
+    secretName: example-tls
+  rules:
+  - host: wolfstore.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-service
+            port:
+              number: 80
+
+
+
+kubectl apply -f ingress.yaml
+
+    ingress.networking.k8s.io/example-ingress created
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+7. Configurar Network Policies
+
+
+Crie um arquivo network-policy.yaml para definir regras de rede:
+
+
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-frontend
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: frontend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: backend
+    ports:
+    - protocol: TCP
+      port: 80
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          role: backend
+    ports:
+    - protocol: TCP
+      port: 80
+
+
+
+
+
+
+kubectl apply -f network-policy.yaml
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Configurar RBAC
+
+
+Crie um arquivo rbac.yaml para gerenciar permissões:
+
+
+
+
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: User
+  name: "jane"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+
+kubectl apply -f rbac.yaml
+
+    role.rbac.authorization.k8s.io/pod-reader created
+    rolebinding.rbac.authorization.k8s.io/read-pods created
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+9. Configurar Pod Security Policies
+
+
+Crie um arquivo pod-security-policy.yaml para aplicar restrições aos pods:
+
+
+
+
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: restricted-psp
+spec:
+  privileged: false
+  allowPrivilegeEscalation: false
+  requiredDropCapabilities:
+  - ALL
+  allowedCapabilities: []
+  volumes:
+  - 'configMap'
+  - 'emptyDir'
+  - 'projected'
+  - 'secret'
+  - 'downwardAPI'
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  runAsUser:
+    rule: 'MustRunAsNonRoot'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+    - min: 1
+      max: 65535
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+    - min: 1
+      max: 65535
+
+
+
+
+kubectl apply -f pod-security-policy.yaml
+
+
+    error: resource mapping not found for name: "restricted-psp" namespace: "" from "pod-security-policy.yaml": no matches for kind "PodSecurityPolicy" in version "policy/v1"
+    ensure CRDs are installed first
+    wolf@dell-Inspiron:$
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -548,6 +1190,32 @@ curl -i 10.96.254.101:8090
 
 
 
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
 ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -561,6 +1229,26 @@ curl -i 10.96.254.101:8090
 
 
 ------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
