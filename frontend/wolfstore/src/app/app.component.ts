@@ -9,4 +9,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'WOLFSTORE';
+  release_date: string = '31/03/2025 22:00';
 }
