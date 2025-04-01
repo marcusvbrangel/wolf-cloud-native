@@ -1178,16 +1178,16 @@ kubectl apply -f pod-security-policy.yaml
 
 
 
-docker image build -t wolfstore-frontend:1.0 .
+docker image build -t wolfstore-frontend .
 
 
-docker container run -p 8085:80 wolfstore-frontend:1.0
+docker container run -p 8085:80 wolfstore-frontend
 
 
-docker tag wolfstore-frontend:1.0 marcusvbrangel/wolfstore-frontend:1.0
+docker tag wolfstore-frontend marcusvbrangel/wolfstore-frontend:1.1.1
 
 
-docker push marcusvbrangel/wolfstore-frontend:1.0
+docker push marcusvbrangel/wolfstore-frontend:1.1.1
 
 
 
@@ -1195,7 +1195,11 @@ docker push marcusvbrangel/wolfstore-frontend:1.0
 ------------------------------------------------------------------------------------------------------------------------
 
 
+kubectl apply -f k8s/wolfstore-backend-ingress.yaml
 
+kubectl get ingress
+
+kubectl describe ingress wolfstore-backend-ingress
 
 
 ------------------------------------------------------------------------------------------------------------------------

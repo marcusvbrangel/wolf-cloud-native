@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: wolfstore-backend
-          image: marcusvbrangel/wolfstore-backend:1.0
+          image: marcusvbrangel/wolfstore-backend:1.0.4
           ports:
-            - containerPort: 80
+            - containerPort: 8080

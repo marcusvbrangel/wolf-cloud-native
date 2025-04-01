@@ -7,8 +7,8 @@
 #
 FROM alpine/java:21-jdk
 WORKDIR /app
-COPY /home/wolf/Documentos/desenvolvimento/estudos/wolf-cloud-native/backend/wolfstore/target/wolfstore-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 80
+COPY /target/wolfstore-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
