@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wolfstore-payment-ingress
+  namespace: wolfns
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: wolfstore.backend.ingress
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wolfstore-frontend-service
+            port:
+              number: 80
+      - path: /api/v1/products
+        pathType: Prefix
+        backend:
+          service:
+            name: wolfstore-backend-service
+            port:
+              number: 8096
