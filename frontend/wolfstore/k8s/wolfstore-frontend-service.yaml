@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wolfstore-frontend-service
+  namespace: wolfns
+spec:
+  selector:
+    app: wolfstore-frontend
+    type: frontend
+    technology: angular
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 80
+  type: LoadBalancer

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wolfstore-products-service
+  namespace: wolfns
+spec:
+  selector:
+    app: wolfstore-products
+    type: backend
+    technology: spring-boot
+  ports:
+    - protocol: TCP
+      port: 8096
+      targetPort: 8080
+  type: ClusterIP

@@ -18,7 +18,7 @@ export class ProductsService {
   getProducts():Observable<Product[]> {
     // const url = 'http://localhost:8080/api/v1/products';
     // const url = 'http://wolfstore-backend-service:8096/api/v1/products'
-    const url = 'http://10.106.136.1:8096/api/v1/products';
+    const url = 'http://10.110.224.232:8096/api/v1/products';
     // const url = 'http://wolfstore.backend.ingress/api/v1/products';
     return this.httpClient.get<Product[]>(url);
   }

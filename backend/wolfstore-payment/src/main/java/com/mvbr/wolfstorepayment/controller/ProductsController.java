@@ -30,7 +30,7 @@ public class ProductsController {
 
     @RequestMapping("/")
     public String initialPage() {
-        return "Welcome to the WolfStore Payment API!";
+        return "Welcome the Wolf Store Payment API!";
     }
 
     @RequestMapping("/api/v2/products")

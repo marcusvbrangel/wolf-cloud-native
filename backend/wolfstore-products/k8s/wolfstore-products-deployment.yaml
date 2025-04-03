@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wolfstore-payment-deployment
+  name: wolfstore-products-deployment
   namespace: wolfns
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: wolfstore-payment
+      app: wolfstore-products
       type: backend
       technology: spring-boot
   template:
     metadata:
       labels:
-        app: wolfstore-payment
+        app: wolfstore-products
         type: backend
         technology: spring-boot
     spec:
       containers:
-        - name: wolfstore-payment
-          image: marcusvbrangel/wolfstore-payment:1.0.5
+        - name: wolfstore-products
+          image: marcusvbrangel/wolfstore-products:1.0.7
           ports:
             - containerPort: 8080
       affinity:
@@ -27,7 +27,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchLabels:
-                  app: wolfstore-payment
+                  app: wolfstore-products
                   type: backend
                   technology: spring-boot
               topologyKey: "kubernetes.io/hostname"

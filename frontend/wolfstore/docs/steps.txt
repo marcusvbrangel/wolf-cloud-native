@@ -1184,10 +1184,10 @@ docker image build -t wolfstore-frontend .
 docker container run -p 8085:80 wolfstore-frontend
 
 
-docker tag wolfstore-frontend marcusvbrangel/wolfstore-frontend:1.1.1
+docker tag wolfstore-frontend marcusvbrangel/wolfstore-frontend:1.1.2
 
 
-docker push marcusvbrangel/wolfstore-frontend:1.1.1
+docker push marcusvbrangel/wolfstore-frontend:1.1.2
 
 
 
@@ -1269,10 +1269,224 @@ WARNING: There are "resources" sections in the chart not set. Using "resourcesPr
 
 
 
+========================================================================================================================
+========================================================================================================================
+========================================================================================================================
+
+
+
+minikube delete -p wolf-cluster
+
+
+minikube start -p base-cluster --nodes=3 --cpus=2 --memory=2200
+
+
+      😄  [base-cluster] minikube v1.35.0 on Ubuntu 24.04
+      ✨  Automatically selected the docker driver
+      📌  Using Docker driver with root privileges
+
+      👍  Starting "base-cluster" primary control-plane node in "base-cluster" cluster
+      🚜  Pulling base image v0.0.46 ...
+      🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+      🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+          ▪ Generating certificates and keys ...
+          ▪ Booting up control plane ...
+          ▪ Configuring RBAC rules ...
+      🔗  Configuring CNI (Container Networking Interface) ...
+      🔎  Verifying Kubernetes components...
+          ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+      🌟  Enabled addons: storage-provisioner, default-storageclass
+
+      👍  Starting "base-cluster-m02" worker node in "base-cluster" cluster
+      🚜  Pulling base image v0.0.46 ...
+      🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+      🌐  Found network options:
+          ▪ NO_PROXY=192.168.58.2
+      🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+          ▪ env NO_PROXY=192.168.58.2
+      🔎  Verifying Kubernetes components...
+
+      👍  Starting "base-cluster-m03" worker node in "base-cluster" cluster
+      🚜  Pulling base image v0.0.46 ...
+      🔥  Creating docker container (CPUs=2, Memory=2200MB) ...
+      🌐  Found network options:
+          ▪ NO_PROXY=192.168.58.2,192.168.58.3
+      🐳  Preparing Kubernetes v1.32.0 on Docker 27.4.1 ...
+          ▪ env NO_PROXY=192.168.58.2
+          ▪ env NO_PROXY=192.168.58.2,192.168.58.3
+      🔎  Verifying Kubernetes components...
+
+      🏄  Done! kubectl is now configured to use "base-cluster" cluster and "default" namespace by default
+
+
+
+
+k get nodes -o wide
+
+
+      NAME               STATUS   ROLES           AGE     VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+      base-cluster       Ready    control-plane   8m5s    v1.32.0   192.168.58.2   <none>        Ubuntu 22.04.5 LTS   6.11.0-21-generic   docker://27.4.1
+      base-cluster-m02   Ready    <none>          7m45s   v1.32.0   192.168.58.3   <none>        Ubuntu 22.04.5 LTS   6.11.0-21-generic   docker://27.4.1
+      base-cluster-m03   Ready    <none>          7m29s   v1.32.0   192.168.58.4   <none>        Ubuntu 22.04.5 LTS   6.11.0-21-generic   docker://27.4.1
+
+
+
+
+
+minikube profile list
+
+
+      |--------------|-----------|---------|--------------|------|---------|--------|-------|----------------|--------------------|
+      |   Profile    | VM Driver | Runtime |      IP      | Port | Version | Status | Nodes | Active Profile | Active Kubecontext |
+      |--------------|-----------|---------|--------------|------|---------|--------|-------|----------------|--------------------|
+      | base-cluster | docker    | docker  | 192.168.58.2 | 8443 | v1.32.0 | OK     |     3 |                | *                  |
+      |--------------|-----------|---------|--------------|------|---------|--------|-------|----------------|--------------------|
+
+
+
+minikube profile base-cluster
+
+      ✅  minikube profile was successfully set to base-cluster
+
+
+
+
+minikube profile list
+
+
+      |--------------|-----------|---------|--------------|------|---------|--------|-------|----------------|--------------------|
+      |   Profile    | VM Driver | Runtime |      IP      | Port | Version | Status | Nodes | Active Profile | Active Kubecontext |
+      |--------------|-----------|---------|--------------|------|---------|--------|-------|----------------|--------------------|
+      | base-cluster | docker    | docker  | 192.168.58.2 | 8443 | v1.32.0 | OK     |     3 | *              | *                  |
+      |--------------|-----------|---------|--------------|------|---------|--------|-------|----------------|--------------------|
+
+
+
+
+
+minikube status base-cluster
+
+      base-cluster
+      type: Control Plane
+      host: Running
+      kubelet: Running
+      apiserver: Running
+      kubeconfig: Configured
+
+      base-cluster-m02
+      type: Worker
+      host: Running
+      kubelet: Running
+
+      base-cluster-m03
+      type: Worker
+      host: Running
+      kubelet: Running
+
+
+
+
+kubectl get namespaces
+
+
+      NAME              STATUS   AGE
+      default           Active   13m
+      kube-node-lease   Active   13m
+      kube-public       Active   13m
+      kube-system       Active   13m
+
+
+
+
+kubectl create namespace wolfns
+
+
+
+kubectl config set-context --current --namespace=wolfns
+
+
+
+
 ------------------------------------------------------------------------------------------------------------------------
 
 
 
+kubectl apply -f k8s/frontend-deployment.yaml
+
+k get deploy -o wide
+
+      NAME                            READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS           IMAGES                                    SELECTOR
+      wolfstore-frontend-deployment   2/2     2            2           59s   wolfstore-frontend   marcusvbrangel/wolfstore-frontend:1.1.1   app=wolfstore-frontend,technology=angular,type=frontend
+
+
+
+
+k get pods -o wide
+
+    wolfstore-frontend-deployment-5fccfb89d6-2gpdp   1/1     Running   0          4m44s   10.244.2.3   base-cluster-m03   <none>           <none>
+    wolfstore-frontend-deployment-5fccfb89d6-tzzxj   1/1     Running   0          4m44s   10.244.1.3   base-cluster-m02   <none>           <none>
+
+
+
+kubectl logs wolfstore-frontend-deployment-5fccfb89d6-2gpdp -n wolfns
+
+      /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+      /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+      /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+      10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+      /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+      /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+      /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+      /docker-entrypoint.sh: Configuration complete; ready for start up
+      2025/04/03 03:29:21 [notice] 1#1: using the "epoll" event method
+      2025/04/03 03:29:21 [notice] 1#1: nginx/1.25.2
+      2025/04/03 03:29:21 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10)
+      2025/04/03 03:29:21 [notice] 1#1: OS: Linux 6.11.0-21-generic
+      2025/04/03 03:29:21 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+      2025/04/03 03:29:21 [notice] 1#1: start worker processes
+      2025/04/03 03:29:21 [notice] 1#1: start worker process 22
+      2025/04/03 03:29:21 [notice] 1#1: start worker process 23
+      2025/04/03 03:29:21 [notice] 1#1: start worker process 24
+      2025/04/03 03:29:21 [notice] 1#1: start worker process 25
+
+
+
+
+kubectl apply -f k8s/frontend-service.yaml
+
+k get svc -o wide
+
+      NAME                         TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE     SELECTOR
+      wolfstore-frontend-service   LoadBalancer   10.101.158.110   <pending>     8090:30340/TCP   2m41s   app=wolfstore-frontend,technology=angular,type=frontend
+
+
+
+
+minikube tunnel -p base-cluster
+
+      [sudo] senha para wolf:
+      Status:
+        machine: base-cluster
+        pid: 1567298
+        route: 10.96.0.0/12 -> 192.168.58.2
+        minikube: Running
+        services: [wolfstore-frontend-service]
+          errors:
+          minikube: no errors
+          router: no errors
+          loadbalancer emulator: no errors
+
+
+
+
+TEST:
+
+    <CLUSTER-IP><port>
+
+    http://10.101.158.110:8090/
+
+    curl -v http://10.101.158.110:8090/
+
 
 
 
@@ -1280,10 +1494,68 @@ WARNING: There are "resources" sections in the chart not set. Using "resourcesPr
 
 
 
+INGRESS
 
 
 
-------------------------------------------------------------------------------------------------------------------------
+minikube addons list | grep ingress
+
+      | ingress                     | base-cluster | disabled     | Kubernetes                     |
+      | ingress-dns                 | base-cluster | disabled     | minikube
+
+
+
+minikube ip -p base-cluster
+
+      192.168.58.2
+
+
+
+
+sudo vim /etc/hosts
+
+
+cat /etc/hosts
+
+      127.0.0.1 localhost
+      127.0.1.1 dell-Inspiron
+
+      # The following lines are desirable for IPv6 capable hosts
+      ::1     ip6-localhost ip6-loopback
+      fe00::0 ip6-localnet
+      ff00::0 ip6-mcastprefix
+      ff02::1 ip6-allnodes
+      ff02::2 ip6-allrouters
+      # Added by Docker Desktop
+      # To allow the same kube context to work on the host and the container:
+      127.0.0.1	kubernetes.docker.internal
+      # End of section
+
+      # My hosts definition
+      192.168.58.2        wolfstore.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TIP:
+
+kubectl api-resources | grep -i ingress
+
+      ingressclasses                                   networking.k8s.io/v1              false        IngressClass
+      ingresses                           ing          networking.k8s.io/v1              true         Ingress
 
 
 

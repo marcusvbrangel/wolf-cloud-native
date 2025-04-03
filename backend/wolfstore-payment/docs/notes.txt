@@ -6,9 +6,9 @@ docker image build -t wolfstore-payment .
 
 docker container run --name=wolfstore-payment -p 8090:8080 wolfstore-payment
 
-docker tag wolfstore-payment marcusvbrangel/wolfstore-payment:1.0.1
+docker tag wolfstore-payment marcusvbrangel/wolfstore-payment:1.0.5
 
-docker push marcusvbrangel/wolfstore-payment:1.0.1
+docker push marcusvbrangel/wolfstore-payment:1.0.5
 
 
 

@@ -21,7 +21,7 @@ public class ProductService {
     }
 
 //    private static final String API_URL = "http://localhost:8080/api/v1/products";
-    private static final String API_URL = "http://wolfstore-backend-service:8096/api/v1/products";
+    private static final String API_URL = "http://wolfstore-products-service:8096/api/v1/products";
 
 //    public List<ProductRequest> getProducts() {
 //        return restTemplate.getForObject(API_URL, List.class);
